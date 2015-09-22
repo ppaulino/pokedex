@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Assignment: Pokedex</title>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>​
+
+	<script>
+		$(document).ready(function() {
+			var character = '';
+			for(var p = 1; p <= 150; p++) {
+				character += '<img id="'+p+'" src="http://pokeapi.co/media/img/'+p+'.png">';
+			}
+			$('#pokemon').html(character);
+			$('img').click(function() {
+				var id = $(this).attr('id');
+				$.get('http://pokeapi.co/api/v1/pokemon/'+id, function(pokemon) {
+					var pokedex = '';
+					pokedex += '<h2>'+pokemon.name+'</h2>';
+					pokedex += '<img src="http://pokeapi.co/media/img/'+id+'.png">';
+					pokedex += '<h3>Types</h3>';
+					for(var i = 0; i < pokemon.types.length; i++) {
+						pokedex += '<p>'+pokemon.types[i].name;+'</p>';
+					}
+					pokedex += '<h3>Height</h3>';
+					pokedex += pokemon.height;
+					pokedex += '<h3>Weight</h3>';
+					pokedex += pokemon.weight;
+					$('#dex').html(pokedex);
+				}, 'json');
+			});
+		});
+	</script>​
+
+</head>
+<body>
+	<div class="container">
+	<h1>Assignment: Pokedex</h1>
+	<p>Instructions: Click on a Pokemon to Learn More</p>
+		<div id="pokemon" class="col-md-8"><img src="http://pokeapi.co/media/img/1.png"></div>
+		<div id="dex" class="col-md-4"></div>
+	</div>	
+</body>
+</html>
